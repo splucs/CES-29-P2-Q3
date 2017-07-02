@@ -3,27 +3,25 @@ package exe03;
 public class MVCPatternDemo {
 	public static void main(String[] args) {
 
-		// fetch student record based on his roll no from the database
-		Student model = retriveStudentFromDatabase();
+		Controller studentController;
+		Controller profController;
+		
+		try {
+			studentController = ControllerFactory.createController("student");
+			profController = ControllerFactory.createController("professor");
+			
+			studentController.updateView();
+			profController.updateView();
 
-		// Create a view : to write student details on console
-		StudentView view = new StudentView();
+			studentController.setName("John");
+			profController.setName("Fenwick");
 
-		StudentController controller = new StudentController(model, view);
+			studentController.updateView();
+			profController.updateView();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		controller.updateView();
-
-		// update model data
-		controller.setStudentName("John");
-
-		controller.updateView();
-	}
-
-	private static Student retriveStudentFromDatabase() {
-		Student student = new Student();
-		student.setName("Robert");
-		student.setRollNo("10");
-		return student;
 	}
 
 }
